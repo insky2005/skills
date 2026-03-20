@@ -1,0 +1,4 @@
+# DDD Architect Skill - Python Dependencies
+# 安装：pip3 install -r requirements.txt
+
+pyyaml>=6.0

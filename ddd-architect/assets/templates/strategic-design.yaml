@@ -1,0 +1,39 @@
+# @template: strategic-design
+# 使用说明：复制此模板，替换 <...> 占位符
+
+ubiquitous_language:
+  - term: <业务术语>
+    definition: <无歧义的精确定义>
+    example: <业务场景中的使用示例>
+    related_terms: [<同义词>, <反义词>]
+
+subdomains:
+  - name: <子域名称>
+    type: core|supporting|generic
+    rationale: <划分理由>
+    key_capabilities: [<能力 1>, <能力 2>]
+
+bounded_contexts:
+  - name: <上下文名称>
+    responsibility: <一句话清晰职责描述>
+    subdomain: <所属子域>
+    candidate_aggregates: [<聚合根 1>, <聚合根 2>]
+    owned_events: [<事件 1>, <事件 2>]
+    external_dependencies: [<依赖的上下文/系统>]
+
+context_map:
+  - upstream: <上游上下文名称>
+    downstream: <本上下文名称>
+    pattern: ACL|Event-Driven|OHS|SharedKernel|Customer-Supplier|Conformist
+    integration: REST|gRPC|MQ|File|DB
+    acl_required: true|false
+    acl_location: upstream|downstream
+    rationale: <选择该集成模式的原因>
+    risks: [<潜在风险 1>, <风险 2>]
+    mitigation: [<缓解措施>]
+
+open_questions:
+  - question: <待澄清的业务问题>
+    impact: <对设计的影响>
+    options: [<选项 A>, <选项 B>]
+    recommendation: <建议选项 + 理由>

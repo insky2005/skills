@@ -1,0 +1,34 @@
+mermaid
+stateDiagram-v2
+    [*] --> Created: create()
+    Created --> Modified: modify()
+    Modified --> Modified: modify()
+    Created --> Deleted: delete()
+    Modified --> Deleted: delete()
+    
+    state Created {
+        [*] --> Validated: invariant_check
+        Validated --> [*]
+    }
+    
+    state Modified {
+        [*] --> BusinessRuleCheck
+        BusinessRuleCheck --> Applied: rule_passed
+        BusinessRuleCheck --> Rejected: rule_failed
+        Applied --> [*]
+    }
+    
+    note right of Created
+        聚合创建时:
+        - 执行不变性校验
+        - 发布 Created 事件
+    end note
+    
+    note right of Modified
+        状态变更时:
+        - 封装业务规则在领域方法
+        - 避免贫血模型
+    end note
+    
+    classDef root fill:#e1f5fe,stroke:#01579b
+    class Created,Modified,Deleted root

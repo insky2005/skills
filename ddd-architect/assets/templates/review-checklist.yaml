@@ -1,0 +1,72 @@
+# @template: review-checklist
+# 使用说明：设计评审检查清单模板
+
+review_target: <被评审的设计名称>
+review_date: <YYYY-MM-DD>
+reviewer: <评审人>
+
+checks:
+  anemic_model:
+    status: pass|warn|fail
+    items:
+      - check: "领域对象是否只有 getter/setter？"
+        result: pass|warn|fail
+        notes: <备注>
+      - check: "业务规则是否分散在 Service 而非实体方法？"
+        result: pass|warn|fail
+        notes: <备注>
+      - check: "是否有'上帝对象'承担过多职责？"
+        result: pass|warn|fail
+        notes: <备注>
+  
+  aggregate_boundary:
+    status: pass|warn|fail
+    items:
+      - check: "聚合根是否控制所有内部对象的访问？"
+        result: pass|warn|fail
+        notes: <备注>
+      - check: "外部引用是否只通过聚合根 ID？"
+        result: pass|warn|fail
+        notes: <备注>
+      - check: "聚合大小是否可控（建议≤5 个实体）？"
+        result: pass|warn|fail
+        notes: <备注>
+  
+  dependency_direction:
+    status: pass|warn|fail
+    items:
+      - check: "领域层是否依赖基础设施层？"
+        result: pass|warn|fail
+        notes: <备注>
+      - check: "仓储接口是否定义在领域层？"
+        result: pass|warn|fail
+        notes: <备注>
+      - check: "领域事件是否解耦了上下文？"
+        result: pass|warn|fail
+        notes: <备注>
+  
+  value_object:
+    status: pass|warn|fail
+    items:
+      - check: "是否标记为不可变？"
+        result: pass|warn|fail
+        notes: <备注>
+      - check: "是否重写了 equals/hashCode？"
+        result: pass|warn|fail
+        notes: <备注>
+      - check: "是否封装了相关校验逻辑？"
+        result: pass|warn|fail
+        notes: <备注>
+
+recommendations:
+  - priority: high|medium|low
+    action: <具体改进动作>
+    rationale: <为什么重要>
+    effort: small|medium|large
+    owner: <负责人>
+    due_date: <截止日期>
+
+next_steps:
+  - [ ] <可立即执行的优化>
+  - [ ] <需要进一步讨论的设计点>
+  - [ ] <需要补充的文档>
