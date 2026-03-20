@@ -1,0 +1,88 @@
+# ================================================================================
+# DDD Design Context for AI Coding Assistant
+# ================================================================================
+# 编程智能体上下文文件 - 让 AI 理解设计意图
+# 
+# 使用方式:
+#   - Qwen Code: @path/to/.ddd-context
+#   - Cursor: 自动读取 .cursorrules 和此文件
+#   - GitHub Copilot: 参考 .github/copilot-instructions.md
+#
+# 生成命令:
+#   python scripts/export-design.py < design.json
+# ================================================================================
+
+project:
+  name: {{project_name}}
+  version: 1.0.0
+  generated_at: {{generated_at}}
+  design_tool: ddd-architect-skill
+
+# ------------------------------------------------------------------------------
+# 限界上下文清单
+# ------------------------------------------------------------------------------
+bounded_contexts:
+{{#bounded_contexts}}
+  - name: {{name}}
+    responsibility: {{responsibility}}
+    design_file: docs/tactical/{{name}}.yaml
+    src_path: src/{{name}}/
+{{/bounded_contexts}}
+
+# ------------------------------------------------------------------------------
+# 编码规范 (必须遵守)
+# ------------------------------------------------------------------------------
+coding_rules:
+  - "领域层 (domain/) 不得 import 基础设施层 (infrastructure/)"
+  - "聚合根必须控制内部对象访问，外部不能直接引用聚合内实体"
+  - "值对象所有字段必须 immutable (final/readonly)"
+  - "跨上下文调用必须通过 ACL 或领域事件，禁止直接依赖"
+  - "仓储接口定义在领域层，实现在基础设施层"
+  - "领域方法命名使用业务语言，避免技术术语"
+  - "一个事务只修改一个聚合"
+  - "领域事件命名使用过去时 (OrderCreated, PaymentCompleted)"
+
+# ------------------------------------------------------------------------------
+# AI 编码指令
+# ------------------------------------------------------------------------------
+ai_instructions:
+  - "编码前请先阅读对应的战术设计文件 @docs/tactical/{context}.yaml"
+  - "生成代码时保持与设计文档的一致性"
+  - "如发现设计与代码冲突，优先反馈设计问题而非强行编码"
+  - "领域对象应包含业务行为，避免贫血模型 (只有 getter/setter)"
+  - "为复杂业务逻辑编写单元测试，验证不变性规则"
+
+# ------------------------------------------------------------------------------
+# 文件位置索引
+# ------------------------------------------------------------------------------
+file_index:
+  strategic_design: docs/strategic/overview.yaml
+  strategic_design_md: docs/strategic/overview.md
+  tactical_designs: docs/tactical/*.yaml
+  ubiquitous_language: docs/ubiquitous-language.md
+  source_code: src/
+
+# ------------------------------------------------------------------------------
+# 快速参考命令
+# ------------------------------------------------------------------------------
+quick_commands:
+  validate_design: "python scripts/validate-aggregate.py < design.yaml"
+  export_design: "python scripts/export-design.py < input.json"
+  generate_skeleton: "python scripts/generate-skeleton.py --context {context}"
+
+# ------------------------------------------------------------------------------
+# 设计质量检查清单
+# ------------------------------------------------------------------------------
+quality_checklist:
+  before_coding:
+    - [ ] 已阅读战略设计文档
+    - [ ] 已阅读对应上下文的战术设计
+    - [ ] 已理解通用语言术语
+    - [ ] 已确认聚合边界
+  
+  after_coding:
+    - [ ] 领域层无基础设施依赖
+    - [ ] 值对象标记为不可变
+    - [ ] 聚合根控制内部访问
+    - [ ] 领域事件使用过去时命名
+    - [ ] 已运行 validate-aggregate.py 校验

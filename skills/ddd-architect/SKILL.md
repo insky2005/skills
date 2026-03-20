@@ -20,6 +20,7 @@ allowed_tools: [web_search, code_interpreter, file_read]
 | `/strategic <业务描述>` | Strategic Design | 用户描述新业务系统/需求 |
 | `/tactical <上下文名>` | Tactical Design | 用户指定限界上下文名称 |
 | `/check <设计内容>` | Design Review | 用户提交设计方案请求评审 |
+| `/export` | Export Docs | 导出设计文档 |
 | `/load <资源名>` | Load Reference | 用户需要深度参考文档 |
 | `/template <模板名>` | Load Template | 用户需要设计模板 |
 | 无指令 | Auto Detect | 根据内容语义自动判断 |
@@ -159,6 +160,44 @@ recommendations:
   - priority: high|medium|low
     action: <具体改进动作>
     rationale: <为什么重要>
+```
+
+---
+
+## 🎯 模式 4: Export Design（设计导出）
+
+### 触发条件
+- 用户输入 `/export` 或 `/export <context-name>`
+- 用户要求"生成文件"、"落地设计"
+
+### 执行步骤
+1. 收集所有已生成的设计内容
+2. 按标准目录结构组织文件
+3. 输出文件创建指令（可被编程智能体执行）
+
+### 输出格式
+```yaml
+# @output: export-design
+export_root: ./ddd-project/
+files:
+  - path: docs/strategic/overview.yaml
+    content: |
+      <战略设计内容>
+  - path: docs/tactical/order-context.yaml
+    content: |
+      <战术设计内容>
+  - path: docs/ubiquitous-language.md
+    content: |
+      <通用语言文档>
+  - path: .ddd-context
+    content: |
+      <编程智能体上下文文件>
+
+commands:
+  - description: 创建目录结构
+    shell: mkdir -p ddd-project/docs/{strategic,tactical}
+  - description: 生成设计文件
+    shell: echo '<content>' > ddd-project/docs/strategic/overview.yaml
 ```
 
 ---
