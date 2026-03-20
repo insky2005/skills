@@ -1,0 +1,23 @@
+# Node modules
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Python venv
+.venv
+**/.venv
+
+# Each skill should have its own .gitignore
+# This is for the root only
